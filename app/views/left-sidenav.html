@@ -1,0 +1,33 @@
+<!-- <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+      
+      <md-content>
+        <section layout="column" layout-sm="row" layout-align="center end">
+          <span flex></span>
+          <md-button class="md-primary md-hue-1" align="end">Overview</md-button>
+          <md-button class="md-primary md-hue-1" ng-ui-sref="main.offers">Manage Offers</md-button>
+          <md-button class="md-primary md-hue-1" ng-ui-sref="main.specifications">Manage Specifications</md-button>
+          <md-button class="md-primary md-hue-1" ng-ui-sref="main.prices">Manage Prices</md-button>
+          
+        </section>
+        
+        
+      </md-content>
+</md-sidenav>
+ -->
+ <div layout="row" flex>
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+				
+		<md-content layout="column" layout-padding layout-align="center start">
+	        <!-- <section layout="column" layout-sm="row" layout-align="center end"> -->
+	          <span flex></span>
+	          <md-button class="md-primary md-hue-1" ui-sref="main.overview">Overview</md-button>
+	          <md-button class="md-primary md-hue-1" ui-sref="main.offers">Manage Offers</md-button>
+	          <md-button class="md-primary md-hue-1" ui-sref="main.specifications">Manage Specifications</md-button>
+	          <md-button class="md-primary md-hue-1" ui-sref="main.prices">Manage Prices</md-button>
+	          <span flex></span>
+	        <!-- </section> -->
+        
+        
+      </md-content>
+	</md-sidenav>
+</div>

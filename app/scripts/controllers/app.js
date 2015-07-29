@@ -36,24 +36,32 @@
       });
   });*/
 
-var app = angular.module('CatalogApp', ['ngMaterial', 'ui.router']);
+var app = angular.module('CatalogApp', ['ngMaterial', 'ui.router'
+    ]);
 
 app.config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('blue-grey')
-    .accentPalette('red');
+    .primaryPalette('indigo')
+    .accentPalette('pink');
 });
 
-/*app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider){
  
-    $urlRouterProvider.otherwise("/overview");
+    $urlRouterProvider.otherwise("/home");
  
+    
     $stateProvider
-        .state("main", { url:"", controller: 'AppCtrl', templateUrl:"pages/main.html" })
-            .state("main.overview", { url: "/main/overview", templateUrl: "pages/overview.html" })
-            .state("main.offers", { url: "/main/offers", templateUrl: "pages/offers.html" })
-            .state("main.specifications", { url: "/main/specifications", templateUrl: "pages/specifications.html" });
-});*/
+        
+        // HOME STATES AND NESTED VIEWS ========================================
+        .state('home', {
+            url: '/home',
+            templateUrl: 'views/overview.html'
+        })
+        
+        .state("home.overview", { url: "/home/overview", templateUrl: "views/overview.html" })
+        .state("home.offers", { url: "/home/offers", templateUrl: "views/offers.html" })
+        .state("home.specifications", { url: "/home/specifications", templateUrl: "views/specifications.html" });
+});
 
 app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
   $scope.toggleSidenav = function(menuId) {
@@ -61,25 +69,25 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
   };
   
   var tabs = [
-          { title: 'Overview', content: "TThis is the Overview tab.", route:'main.overview'},
-          { title: 'Manage Offers', content: "TThis is the Offers tab.", route:'main.offers', disabled:true},
-      { title: 'Manage Specifications', content: "TThis is the Specifications tab.", route:'main.specifications', disabled:true}
+          { title: 'Overview', content: "TThis is the Overview tab.", route:'main.overview'}
         ],
         selected = null,
         previous = null;
     $scope.tabs = tabs;
-    $scope.selectedIndex = 2;
+    $scope.selectedIndex = 1;
     $scope.$watch('selectedIndex', function(current, old){
       previous = selected;
       selected = tabs[current];
       //if ( old + 1 && (old != current)) $log.debug('Goodbye ' + previous.title + '!');
       //if ( current + 1 )                $log.debug('Hello ' + selected.title + '!');
     });
+
     $scope.addTab = function (title, view) {
       view = view || title + " Content View";
       tabs.push({ title: title, content: view, disabled: false});
     $scope.selectedIndex = tabs.length;
     };
+    
     $scope.removeTab = function (tab) {
       var index = tabs.indexOf(tab);
       tabs.splice(index, 1);
