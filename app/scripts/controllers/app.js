@@ -36,7 +36,7 @@
       });
   });*/
 
-var app = angular.module('CatalogApp', ['ngMaterial', 'ui.router'
+var app = angular.module('CatalogApp', ['ngMaterial', 'ngRoute'
     ]);
 
 app.config(function($mdThemingProvider) {
@@ -45,31 +45,53 @@ app.config(function($mdThemingProvider) {
     .accentPalette('pink');
 });
 
-app.config(function($stateProvider, $urlRouterProvider){
+/*app.config(function($stateProvider, $urlRouterProvider){
  
-    $urlRouterProvider.otherwise("/home");
+    $urlRouterProvider.otherwise("/main/tab1");
  
-    
     $stateProvider
-        
-        // HOME STATES AND NESTED VIEWS ========================================
-        .state('home', {
-            url: '/home',
-            templateUrl: 'views/overview.html'
-        })
-        
-        .state("home.overview", { url: "/home/overview", templateUrl: "views/overview.html" })
-        .state("home.offers", { url: "/home/offers", templateUrl: "views/offers.html" })
-        .state("home.specifications", { url: "/home/specifications", templateUrl: "views/specifications.html" });
-});
+        .state("main", { abstract: true, url:"/main", templateUrl:"main.html" })
+            .state("main.overview", { url: "/overview", templateUrl: "views/overview.html" })
+            .state("main.offers", { url: "/offers", templateUrl: "views/offers.html" })
+            .state("main.specifications", { url: "/specifications", templateUrl: "views/specifications.html" });
+});*/
 
-app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
+app.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/overview', {
+          templateUrl: 'views/overview.html'
+      }).
+      when('/offers', {
+        templateUrl: 'views/offers.html'
+    }).
+      when('/specifications', {
+        templateUrl: 'views/specifications.html'
+      }).
+      when('/prices', {
+        templateUrl: 'views/prices.html'
+      }).
+      otherwise({
+        redirectTo: '/overview'
+      });
+}]);
+
+app.controller('AppCtrl', ['$scope', '$mdSidenav', '$location',function($scope, $mdSidenav, $location){
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
   
+  var menuItems = [
+    {title: 'Overview',content: "TThis is the Overview tab.", route:"/overview"},
+    {title: 'Offers',content: "TThis is the Offers tab.", route:"/offers"},
+    {title: 'Specifications',content: "TThis is the Specifications tab.", route:"/specifications"}
+
+  ];
+
+  $scope.menuItems = menuItems;
+
   var tabs = [
-          { title: 'Overview', content: "TThis is the Overview tab.", route:'main.overview'}
+          { title: 'Overview', content: "TThis is the Overview tab.", route:'overview'}
         ],
         selected = null,
         previous = null;
@@ -91,6 +113,12 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
     $scope.removeTab = function (tab) {
       var index = tabs.indexOf(tab);
       tabs.splice(index, 1);
+    };
+
+    $scope.menuItemsClicked = function(title,route) {
+        $scope.addTab(title,title);
+
+        $location.path(route);
     };
  
 }]);
