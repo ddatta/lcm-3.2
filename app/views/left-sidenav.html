@@ -21,12 +21,12 @@
 	        <!-- <section layout="column" layout-sm="row" layout-align="center end"> -->
 	          <span flex></span>
 	          <!-- <form ng-submit="addTab(tTitle,tContent)" layout="column" class="md-padding" style="padding-top: 0;"> -->
-	          <!-- <md-button ng-repeat="item in menuItems" href="#overview" >{{item.title}}</md-button> -->
-	          <md-button class="md-primary md-hue-1" ng-Click="menuItemsClicked('Overview','/overview')">Overview</md-button>
+	         <md-button ng-repeat="item in menuItems" ng-Click="menuItemsClicked(item.title,item.route)" >{{item.title}}</md-button> 
+	          <!-- <md-button class="md-primary md-hue-1" ng-Click="menuItemsClicked('Overview','/overview')">Overview</md-button>
 	          <md-button class="md-primary md-hue-1" ng-Click="menuItemsClicked('Offers','/offers')">Manage Offers</md-button>
 	          <md-button class="md-primary md-hue-1" ng-Click="menuItemsClicked('Specifications','/specifications')">Manage Specifications</md-button>
 	          <md-button class="md-primary md-hue-1" ng-Click="menuItemsClicked('Prices','/prices')">Manage Prices</md-button>
-	          
+	           -->
 	     <!--      </form> -->
 	          <span flex></span>
 	        <!-- </section> -->

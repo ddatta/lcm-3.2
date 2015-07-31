@@ -7,16 +7,16 @@
 
                 <md-content >
                   <md-tabs layout=align="start" md-selected="selectedIndex" md-border-bottom="" md-autoselect="">
-                    <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled">
-                    <md-tab-label>
-                      {{tab.title}}
-                      <md-button class="md-icon-button"  ng-click="removeTab( tab )" ng-hide="tabs.length <= 1">
-                      <md-icon md-font-icon="fa-close" class="fa s14 md-primary md-hue-2"  ></md-icon>
-                      </md-button>
-                    </md-tab-label>
-                    <md-tab-body>
-                      <div ng-view></div>
-                    </md-tab-body>
+                    <md-tab ng-repeat="tab in tabs" ng-disabled="tab.disabled" md-on-select="onTabSelect(tab)">
+                      <md-tab-label>
+                        {{tab.title}}
+                        <md-button class="md-icon-button"  ng-click="removeTab( tab )" ng-hide="tabs.length <= 1">
+                        <md-icon md-font-icon="fa-close" class="fa s14 md-primary md-hue-2"  ></md-icon>
+                        </md-button>
+                      </md-tab-label>
+                      <md-tab-body>
+                        <div ui-view></div>
+                      </md-tab-body>
                     </md-tab>
                   </md-tabs>
                 </md-content>

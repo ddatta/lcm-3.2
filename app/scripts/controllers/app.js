@@ -1,42 +1,6 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name lcm32App
- * @description
- * # lcm32App
- *
- * Main module of the application.
- */
-/*angular
-  .module('lcm32App', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch'
-  ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });*/
-
-var app = angular.module('CatalogApp', ['ngMaterial', 'ngRoute'
+var app = angular.module('CatalogApp', ['ngMaterial', 'ui.router'
     ]);
 
 app.config(function($mdThemingProvider) {
@@ -45,17 +9,18 @@ app.config(function($mdThemingProvider) {
     .accentPalette('pink');
 });
 
-/*app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider){
  
-    $urlRouterProvider.otherwise("/main/tab1");
+    $urlRouterProvider.otherwise("/overview");
  
     $stateProvider
-        .state("main", { abstract: true, url:"/main", templateUrl:"main.html" })
+        .state("main", { abstract: true, url:"", templateUrl:"views/main.html" })
             .state("main.overview", { url: "/overview", templateUrl: "views/overview.html" })
             .state("main.offers", { url: "/offers", templateUrl: "views/offers.html" })
-            .state("main.specifications", { url: "/specifications", templateUrl: "views/specifications.html" });
-});*/
-
+            .state("main.specifications", { url: "/specifications", templateUrl: "views/specifications.html" })
+            .state("main.prices", { url: "/prices", templateUrl: "views/prices.html" });
+});
+/*
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -75,23 +40,24 @@ app.config(['$routeProvider',
         redirectTo: '/overview'
       });
 }]);
-
-app.controller('AppCtrl', ['$scope', '$mdSidenav', '$location',function($scope, $mdSidenav, $location){
+*/
+app.controller('AppCtrl', ['$scope', '$mdSidenav', '$location','$state',function($scope, $mdSidenav, $location, $state){
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
   
   var menuItems = [
-    {title: 'Overview',content: "TThis is the Overview tab.", route:"/overview"},
-    {title: 'Offers',content: "TThis is the Offers tab.", route:"/offers"},
-    {title: 'Specifications',content: "TThis is the Specifications tab.", route:"/specifications"}
+    {title: 'Overview',content: "TThis is the Overview tab.", route:'main.overview'},
+    {title: 'Offers',content: "TThis is the Offers tab.", route:'main.offers'},
+    {title: 'Specifications',content: "TThis is the Specifications tab.", route:'main.specifications'},
+    {title: 'Prices',content: "TThis is the Prices tab.", route:'main.prices'}
 
   ];
 
   $scope.menuItems = menuItems;
 
   var tabs = [
-          { title: 'Overview', content: "TThis is the Overview tab.", route:'overview'}
+          { title: 'Overview', content: "TThis is the Overview tab.", route:'main.overview'}
         ],
         selected = null,
         previous = null;
@@ -104,9 +70,9 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', '$location',function($scope, 
       //if ( current + 1 )                $log.debug('Hello ' + selected.title + '!');
     });
 
-    $scope.addTab = function (title, view) {
+    $scope.addTab = function (title, view, route) {
       view = view || title + " Content View";
-      tabs.push({ title: title, content: view, disabled: false});
+      tabs.push({ title: title, content: view, route: route, disabled: false});
     $scope.selectedIndex = tabs.length;
     };
     
@@ -116,9 +82,15 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', '$location',function($scope, 
     };
 
     $scope.menuItemsClicked = function(title,route) {
-        $scope.addTab(title,title);
+        $scope.addTab(title,title,route);
+        $state.go(route);
+        //$location.path(route);
+    };
 
-        $location.path(route);
+    $scope.onTabSelect = function(tab) {
+        //alert(tab.route);
+        $state.go(tab.route);
+        //$location.path(route);
     };
  
 }]);
